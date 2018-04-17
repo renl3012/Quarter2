@@ -1,3 +1,4 @@
+package pixlab;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -226,10 +227,16 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
   private void setUpNextAndPreviousButtons()
   {
     // create the image icons for the buttons
-    Icon prevIcon = new ImageIcon(DigitalPicture.class.getResource("leftArrow.gif"), 
+    /*Icon prevIcon = new ImageIcon(DigitalPicture.class.getResource("leftArrow.gif"), 
                                   "previous index");
     Icon nextIcon = new ImageIcon(DigitalPicture.class.getResource("rightArrow.gif"), 
-                                  "next index");
+                                  "next index");*/
+	  
+	  Icon prevIcon = new ImageIcon("C:\\Users\\renl3012\\Desktop\\APCSA Git\\Quarter2\\00Q2\\src\\pixlab\\images\\leftArrow.gif", 
+              "previous index");
+	  Icon nextIcon = new ImageIcon("C:\\Users\\renl3012\\Desktop\\APCSA Git\\Quarter2\\00Q2\\src\\pixlab\\images\\rightArrow.gif", 
+              "next index");
+	  
     // create the arrow buttons
     colPrevButton = new JButton(prevIcon);
     colNextButton = new JButton(nextIcon);
@@ -800,8 +807,13 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
    */
   public static void main( String args[])
   {
-    Picture pix = new Picture("beach.jpg");
-    pix.explore();
+    //Picture pix = new Picture("beach.jpg");
+    //pix.explore();
+    
+    Picture p = new Picture("myPicture.jpg");
+    Picture smallP = p.scale(0.25,0.25);
+    smallP.write("smallMyPicture.jpg");
+    smallP.explore();
   }
   
 }

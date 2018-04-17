@@ -1,3 +1,4 @@
+package pixlab;
 public class IntArrayWorker
 {
   /** two dimensional matrix */
@@ -11,6 +12,46 @@ public class IntArrayWorker
     matrix = theMatrix;
   }
   
+  public int getCount(int seek){
+	  int count = 0;
+	  for(int i = 0; i < matrix.length; i++){
+		  for(int h = 0; h < matrix[0].length; h++){
+			  if (matrix[i][h] == seek){
+				  count++;
+			  }
+		  }
+	  }
+	  return count;
+  }
+  
+  /*returns the largest value
+  in the matrix. There is already a method to test this in IntArrayWorkerTester. Just
+  uncomment the method testGetLargest() and the call to it in the main method of
+  IntArrayWorkerTester.*/
+  public int getLargest(){
+	  int largest = Integer.MIN_VALUE;
+	  for(int i = 0; i < matrix.length; i++){
+		  for(int h = 0; h < matrix[0].length; h++){
+			  if (matrix[i][h] > largest){
+				  largest = matrix[i][h];
+			  }
+		  }
+	  }
+	  return largest;
+  }
+  
+  /*Write a getColTotal method in the IntArrayWorker class that returns the total of all
+integers in a specified column. There is already a method to test this in
+IntArrayWorkerTester. Just uncomment the method testGetColTotal() and the
+call to it in the main method of IntArrayWorkerTester.*/
+  
+  public int getColTotal(int column){
+	  int total = 0;
+	  for(int a = 0; a < matrix.length; a++){
+		  total += matrix[a][column];
+	  }
+	  return total;
+  }
   /**
    * Method to return the total 
    * @return the total of the values in the array
