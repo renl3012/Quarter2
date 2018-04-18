@@ -100,6 +100,73 @@ public class Picture extends SimplePicture
     }
   }
   
+  public void keepOnlyBlue(){
+	  Pixel[][] pixels = this.getPixels2D();
+	  for(Pixel[] rowArray : pixels){
+		  for (Pixel pixelObj: rowArray){
+			  pixelObj.setRed(0);
+			  pixelObj.setGreen(0);
+		  }
+	  }
+  }
+  
+  public void negate(){
+	  Pixel[][] pixels = this.getPixels2D();
+	  for(Pixel[] rowArray : pixels){
+		  for (Pixel pixelObj: rowArray){
+			  pixelObj.setRed(255 - pixelObj.getRed());
+			  pixelObj.setGreen(255 - pixelObj.getGreen());
+			  pixelObj.setBlue(255 - pixelObj.getBlue());
+		  }
+	  }
+  }
+  
+  public void grayscale(){
+	  int total;
+	  int average;
+	  Pixel[][] pixels = this.getPixels2D();
+	  for(Pixel[] rowArray : pixels){
+		  for (Pixel pixelObj: rowArray){
+			  total = 0;
+			  total += pixelObj.getRed() + pixelObj.getGreen() + pixelObj.getBlue();
+			  average = total/3;
+			  pixelObj.setRed(average);
+			  pixelObj.setGreen(average);
+			  pixelObj.setBlue(average);
+		  }
+	  }
+	  
+  }
+  
+  public void fixUnderwater(){
+	  Pixel[][] pixels = this.getPixels2D();
+	  for(Pixel[] rowArray : pixels){
+		  for (Pixel pixelObj: rowArray){
+			  pixelObj.setRed(pixelObj.getRed()*5);
+		  }
+	  }
+  }
+  
+  /*Write the method mirrorVerticalRightToLeft that mirrors a picture around a mirror
+placed vertically from right to left. Hint: you can copy the body of mirrorVertical and
+only change one line in the body of the method to accomplish this. Write a class (static) test
+method called testMirrorVerticalRightToLeft in PictureTester to test this
+new method and call it in the main method.*/
+  
+  public void mirrorVerticalRightToLeft(){
+	  Pixel[][] pixels = this.getPixels2D();
+	  Pixel leftPixel = null;
+	  Pixel rightPixel = null;
+	  int width = pixels[0].length;
+	  for (int row = 0; row < pixels.length; row++){
+		  for (int col = 0; col < width / 2; col++){
+			  leftPixel = pixels[row][col];
+			  rightPixel = pixels[row][width - 1 - col];
+			  leftPixel.setColor(rightPixel.getColor());
+		  }
+	  }
+  }
+  
   /** Method that mirrors the picture around a 
     * vertical mirror in the center of the picture
     * from left to right */
@@ -227,7 +294,8 @@ public class Picture extends SimplePicture
   {
     Picture beach = new Picture("beach.jpg");
     beach.explore();
-    beach.zeroBlue();
+    //beach.zeroBlue();
+    beach.keepOnlyBlue();
     beach.explore();
   }
   
