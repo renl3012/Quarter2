@@ -52,6 +52,18 @@ public class PictureTester
 	  moto.mirrorVerticalRightToLeft();
 	  moto.explore();
   }
+  
+  public static void testMirrorHorizontal(){
+	  Picture moto = new Picture("redMotorcycle.jpg");
+	  moto.mirrorHorizontal();
+	  moto.explore();
+  }
+  
+  public static void testMirrorHorizontalBotToTop(){
+	  Picture moto = new Picture("redMotorcycle.jpg");
+	  moto.mirrorHorizontalBotToTop();
+	  moto.explore();
+  }
   /** Method to test mirrorVertical */
   public static void testMirrorVertical()
   {
@@ -61,13 +73,44 @@ public class PictureTester
     caterpillar.explore();
   }
   
+  public static void testMirrorDiagonal(){
+	  Picture beach = new Picture("beach.jpg");
+	  beach.mirrorDiagonal();
+	  beach.explore();
+  }
   /** Method to test mirrorTemple */
   public static void testMirrorTemple()
   {
-    Picture temple = new Picture("temple.jpg");
-    temple.explore();
-    temple.mirrorTemple();
-    temple.explore();
+	  Picture temple = new Picture("temple.jpg");
+	  temple.explore();
+	  temple.mirrorTemple();
+	  temple.explore();
+  }
+  
+  public static void testMirrorArms(){
+	  Picture snow = new Picture("snowman.jpg");
+	  snow.mirrorArms();
+	  snow.explore();
+  }
+  
+  public static void testMirrorGull(){
+	  Picture gull = new Picture("seagull.jpg");
+	  gull.mirrorGull();
+	  gull.explore();
+  }
+  
+  public static void testCopy(Picture fromPic, 
+          int startRow, int startCol){
+	  Picture gull = new Picture("seagull.jpg");
+	  gull.copy(gull, 500, 500);
+	  gull.explore();	  
+  }
+  
+  public static void testSpecificCopy(){
+	  Picture gull = new Picture("seagull.jpg");
+	  Picture moto = new Picture("redMotorcycle.jpg");
+	  gull.specificCopy(moto, 331, 234, 600, 600);
+	  gull.explore();	  
   }
   
   /** Method to test the collage method */
@@ -75,6 +118,13 @@ public class PictureTester
   {
     Picture canvas = new Picture("640x480.jpg");
     canvas.createCollage();
+    canvas.explore();
+  }
+  
+  public static void testMyCollage()
+  {
+    Picture canvas = new Picture("640x480.jpg");
+    canvas.myCollage();
     canvas.explore();
   }
   
@@ -99,7 +149,10 @@ public class PictureTester
     //testKeepOnlyGreen();
     //testNegate();
     //testGrayscale();
-	  testMirrorVerticalRightToLeft();
+	//testMirrorVerticalRightToLeft();
+	//testMirrorHorizontal();
+	//testMirrorHorizontalBotToTop();
+	//testMirrorDiagonal();
     //testFixUnderwater();
     //testMirrorVertical();
     //testMirrorTemple();
@@ -108,7 +161,9 @@ public class PictureTester
     //testMirrorDiagonal();
     //testCollage();
     //testCopy();
-    //testEdgeDetection();
+	//testSpecificCopy();
+	//testMyCollage();
+    testEdgeDetection();
     //testEdgeDetection2();
     //testChromakey();
     //testEncodeAndDecode();
