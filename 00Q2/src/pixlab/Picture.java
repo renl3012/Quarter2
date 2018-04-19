@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.text.*;
 import java.util.*;
 import java.util.List; // resolves problem with java.awt.List and java.util.List
+import java.lang.Math;
 
 /**
  * A class that represents a picture.  This class inherits from 
@@ -428,7 +429,37 @@ new method and call it in the main method.*/
     }
   }
   
-  
+  public void edgeDetection2()
+  {
+    Pixel leftPixel = null;
+    Pixel rightPixel = null;
+    Pixel bottomPixel = null;
+    Pixel[][] pixels = this.getPixels2D();
+    Color rightColor = null;
+    Color bottomColor = null;
+    for (int row = 0; row < pixels.length; row++)
+    {
+      for (int col = 0; 
+           col < pixels[0].length-1; col++)
+      {
+        leftPixel = pixels[row][col];
+        rightPixel = pixels[row][col+1];
+        rightColor = rightPixel.getColor();
+        if(row < pixels.length-1){
+        	bottomPixel = pixels[row+1][col];
+            bottomColor = bottomPixel.getColor();
+        }
+        if (Math.abs(leftPixel.getRed()-rightPixel.getRed()) > 10 || Math.abs(leftPixel.getGreen()-rightPixel.getGreen()) > 10 || Math.abs(leftPixel.getBlue()-rightPixel.getBlue()) > 10){
+        	leftPixel.setColor(Color.BLACK);
+        } //else if (leftPixel.getRed() > 1.1*bottomPixel.getRed() || leftPixel.getGreen() > 1.1*bottomPixel.getGreen() || leftPixel.getBlue() > 1.1*bottomPixel.getBlue()){
+        else if (Math.abs(leftPixel.getRed()-bottomPixel.getRed()) > 10 || Math.abs(leftPixel.getGreen()-bottomPixel.getGreen()) > 10 || Math.abs(leftPixel.getBlue()-bottomPixel.getBlue()) > 10){
+        	leftPixel.setColor(Color.BLACK);
+        } else{
+        	leftPixel.setColor(Color.WHITE);
+        }   
+      }
+    }
+  }  
   /* Main method for testing - each class in Java can have a main 
    * method 
    */
