@@ -121,6 +121,15 @@ public class PictureTester
     canvas.explore();
   }
   
+  public static void testBlur(){
+	  Picture swan = new Picture("swan.jpg");
+	  swan.blur(100, 50, 300, 300);
+	  swan.blur(100, 50, 300, 300);
+	  swan.blur(100, 50, 300, 300);
+	  swan.blur(100, 50, 300, 300);
+	  swan.explore();
+  }
+  
   public static void testMyCollage()
   {
     Picture canvas = new Picture("640x480.jpg");
@@ -165,12 +174,13 @@ public class PictureTester
     //testMirrorArms();
     //testMirrorGull();
     //testMirrorDiagonal();
+	  testBlur();
     //testCollage();
     //testCopy();
 	//testSpecificCopy();
 	//testMyCollage();
     //testEdgeDetection();
-    testEdgeDetection2();
+    //testEdgeDetection2();
     //testEdgeDetection2();
     //testChromakey();
     //testEncodeAndDecode();

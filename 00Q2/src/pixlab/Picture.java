@@ -365,6 +365,83 @@ new method and call it in the main method.*/
 	    }  	  
   }
   
+  public void blur(int x, int y, int width, int height){
+	  int redAverage;
+	  int greenAverage;
+	  int blueAverage;
+	  Pixel[][] pixels = this.getPixels2D();
+	  
+	  int red;
+	  int green;
+	  int blue;
+	  
+	  //if color distance is small enough, take average and change top, bottom, left, and right pixels as necessary
+	  for(int row = y + 1; row < y + height; row++){
+		  for (int col = x + 1; col < x + width; col++){
+			  if(pixels[row][col].colorDistance(pixels[row][col + 1].getColor()) < 25){
+				  red = pixels[row][col].getRed();
+				  redAverage = (red + pixels[row][col+1].getRed())/2;
+				 
+				  green = pixels[row][col].getGreen();
+				  greenAverage = (green + pixels[row][col+1].getGreen())/2;
+				  
+				  blue = pixels[row][col].getBlue();
+				  blueAverage = (blue + pixels[row][col+1].getBlue())/2;
+				  
+				  pixels[row][col+1].setRed(redAverage);
+				  pixels[row][col+1].setGreen(greenAverage);
+				  pixels[row][col+1].setBlue(blueAverage);
+			  }
+			  
+			  if(pixels[row][col].colorDistance(pixels[row + 1][col].getColor()) < 25){
+				  red = pixels[row][col].getRed();
+				  redAverage = (red + pixels[row + 1][col].getRed())/2;
+				 
+				  green = pixels[row][col].getGreen();
+				  greenAverage = (green + pixels[row + 1][col].getGreen())/2;
+				  
+				  blue = pixels[row][col].getBlue();
+				  blueAverage = (blue + pixels[row + 1][col].getBlue())/2;
+				  
+				  pixels[row + 1][col].setRed(redAverage);
+				  pixels[row + 1][col].setGreen(greenAverage);
+				  pixels[row + 1][col].setBlue(blueAverage);
+			  }
+			  
+			  if(pixels[row][col].colorDistance(pixels[row - 1][col].getColor()) < 25){
+				  red = pixels[row][col].getRed();
+				  redAverage = (red + pixels[row - 1][col].getRed())/2;
+				 
+				  green = pixels[row][col].getGreen();
+				  greenAverage = (green + pixels[row - 1][col].getGreen())/2;
+				  
+				  blue = pixels[row][col].getBlue();
+				  blueAverage = (blue + pixels[row + 1][col].getBlue())/2;
+				  
+				  pixels[row - 1][col].setRed(redAverage);
+				  pixels[row - 1][col].setGreen(greenAverage);
+				  pixels[row - 1][col].setBlue(blueAverage);
+			  }
+			  
+			  if(pixels[row][col].colorDistance(pixels[row][col - 1].getColor()) < 25){
+				  red = pixels[row][col].getRed();
+				  redAverage = (red + pixels[row][col-1].getRed())/2;
+				 
+				  green = pixels[row][col].getGreen();
+				  greenAverage = (green + pixels[row][col-1].getGreen())/2;
+				  
+				  blue = pixels[row][col].getBlue();
+				  blueAverage = (blue + pixels[row][col-1].getBlue())/2;
+				  
+				  pixels[row][col-1].setRed(redAverage);
+				  pixels[row][col-1].setGreen(greenAverage);
+				  pixels[row][col-1].setBlue(blueAverage);
+			  }
+		  }
+	  }
+	  
+  }
+  
   public void myCollage(){
 	  Picture robo = new Picture("robot.jpg");
 	  Picture cater = new Picture("caterpillar.jpg");
