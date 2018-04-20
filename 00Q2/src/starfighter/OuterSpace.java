@@ -34,7 +34,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		keys = new boolean[5];
 
 		//instantiate other stuff
-
+		
 		this.addKeyListener(this);
 		new Thread(this).start();
 
@@ -51,12 +51,12 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		//set up the double buffering to make the game animation nice and smooth
 		Graphics2D twoDGraph = (Graphics2D)window;
 
-		//take a snap shop of the current screen and same it as an image
+		//take a snapshot of the current screen and same it as an image
 		//that is the exact same width and height as the current screen
 		if(back==null)
 		   back = (BufferedImage)(createImage(getWidth(),getHeight()));
 
-		//create a graphics reference to the back ground image
+		//create a graphics reference to the background image
 		//we will draw all changes on the background image
 		Graphics graphToBack = back.createGraphics();
 
@@ -65,9 +65,32 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		graphToBack.setColor(Color.BLACK);
 		graphToBack.fillRect(0,0,800,600);
 
+		ship = new Ship();
+		ship.draw(graphToBack);
+		
 		if(keys[0] == true)
 		{
 			ship.move("LEFT");
+		}
+		
+		if(keys[1] == true)
+		{
+			ship.move("RIGHT");
+		}
+		
+		if(keys[2] == true)
+		{
+			ship.move("UP");
+		}
+		
+		if(keys[3] == true)
+		{
+			ship.move("DOWN");
+		}
+		
+		if(keys[4] == true)
+		{
+			ship.move("SPACE");
 		}
 
 		//add code to move stuff
@@ -132,7 +155,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 
 	public void keyTyped(KeyEvent e)
 	{
-
+		
 	}
 
    public void run()
