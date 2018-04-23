@@ -12,6 +12,8 @@ import java.awt.image.BufferedImage;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import pong.Paddle;
+
 public class OuterSpace extends Canvas implements KeyListener, Runnable
 {
 	private Ship ship;
@@ -34,7 +36,10 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		keys = new boolean[5];
 
 		//instantiate other stuff
-		
+		ship = new Ship(300, 480, 2);
+		alienOne = new Alien(200, 100, 2);
+		alienTwo = new Alien(300, 100, 2);
+				
 		this.addKeyListener(this);
 		new Thread(this).start();
 
@@ -65,27 +70,54 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		graphToBack.setColor(Color.BLACK);
 		graphToBack.fillRect(0,0,800,600);
 
-		ship = new Ship();
-		ship.draw(graphToBack);
 		
+		ship.draw(graphToBack);
+		alienOne.draw(graphToBack);
+		alienTwo.draw(graphToBack);
+		
+		while(alienOne.getX() >= 0 && alienOne.getX() <= 710){
+			alienOne.move("LEFT");
+		}
+		if(alienOne.getX() < 0 || alienOne.getX() > 710){
+			alienOne.setSpeed(-alienOne.getSpeed());
+		}
+		
+		while(alienTwo.getX() >= 0 && alienTwo.getX() <= 490){
+			alienTwo.move("LEFT");
+		}
+		if(alienTwo.getX() < 0 || alienTwo.getX() > 490){
+			alienTwo.setSpeed(-alienTwo.getSpeed());
+		}
+		
+		//add code to move stuff
 		if(keys[0] == true)
 		{
-			ship.move("LEFT");
+			if(ship.getX() >= -10){
+				ship.move("LEFT");
+			}
+			
 		}
 		
 		if(keys[1] == true)
 		{
-			ship.move("RIGHT");
+			if(ship.getX() <= 720){
+				ship.move("RIGHT");
+			}
 		}
 		
 		if(keys[2] == true)
 		{
-			ship.move("UP");
+			if(ship.getY() > 0){
+				ship.move("UP");
+			}
+			
 		}
 		
 		if(keys[3] == true)
 		{
-			ship.move("DOWN");
+			if(ship.getY() < 490){
+				ship.move("DOWN");
+			}
 		}
 		
 		if(keys[4] == true)
@@ -93,11 +125,9 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 			ship.move("SPACE");
 		}
 
-		//add code to move stuff
-		
-
 		//add in collision detection
-
+		
+		
 
 		twoDGraph.drawImage(back, null, 0, 0);
 	}

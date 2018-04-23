@@ -24,7 +24,7 @@ public class Ship extends MovingThing
 	public Ship(int x, int y, int s)
 	{
 		super(x, y);
-		speed=s;
+		speed = s;
 		try
 		{
 			image = ImageIO.read(new File(System.getProperty("user.dir") + "\\src\\starfighter\\ship.jpg"));
@@ -45,16 +45,17 @@ public class Ship extends MovingThing
 
 	public int getSpeed()
 	{
-	   return 0;
+	   return speed;
 	}
 
 	public void draw( Graphics window )
 	{
-   	window.drawImage(image,getX(),getY(),80,80,null);
+		window.drawImage(image,getX(),getY(),80,80,null);
+		
 	}
 
 	public String toString()
 	{
-		return super.toString() + getSpeed();
+		return super.toString() + "Speed: " + getSpeed();
 	}
 }

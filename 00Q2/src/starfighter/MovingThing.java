@@ -70,16 +70,16 @@ public abstract class MovingThing implements Locatable
 		}
 		
 		if(direction.equals("UP")){
-			setX(getY()-getSpeed());
+			setY(getY()-getSpeed());
 		}
 		
 		if(direction.equals("DOWN")){
-			setX(getY()+getSpeed());
+			setY(getY()+getSpeed());
 		}
 	}
 
 	public String toString()
 	{
-		return "";
+		return "X: " + xPos + " Y: " + yPos + " ";
 	}
 }
