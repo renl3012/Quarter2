@@ -75,17 +75,13 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		alienOne.draw(graphToBack);
 		alienTwo.draw(graphToBack);
 		
-		while(alienOne.getX() >= 0 && alienOne.getX() <= 710){
-			alienOne.move("LEFT");
-		}
+		alienOne.move("LEFT");
 		if(alienOne.getX() < 0 || alienOne.getX() > 710){
 			alienOne.setSpeed(-alienOne.getSpeed());
 		}
 		
-		while(alienTwo.getX() >= 0 && alienTwo.getX() <= 490){
-			alienTwo.move("LEFT");
-		}
-		if(alienTwo.getX() < 0 || alienTwo.getX() > 490){
+		alienTwo.move("LEFT");	
+		if(alienTwo.getX() < 0 || alienTwo.getX() > 710){
 			alienTwo.setSpeed(-alienTwo.getSpeed());
 		}
 		
@@ -122,12 +118,8 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		
 		if(keys[4] == true)
 		{
-			ship.move("SPACE");
-		}
-
-		//add in collision detection
-		
-		
+			
+		}		
 
 		twoDGraph.drawImage(back, null, 0, 0);
 	}
