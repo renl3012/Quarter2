@@ -46,10 +46,15 @@ public class Alien extends MovingThing
 	{
 	   return speed;
 	}
+	
+	public void invisible(Graphics window )
+	{
+		window.drawImage(null, getX(), getY(), 80, 80, null);
+	}
 
 	public void draw( Graphics window )
 	{
-   	window.drawImage(image,getX(),getY(),80,80,null);
+		window.drawImage(image,getX(),getY(),80,80,null);
 	}
 
 	public String toString()
