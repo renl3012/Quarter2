@@ -155,11 +155,13 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 				alienOne.setSpeed(0);
 				ammo.move("DOWN");
 				ammo.setSpeed(0);
+				ammo.invisible(graphToBack);
+				alienOne.invisible(graphToBack);
 				destroyed = true;
 				score++;
 				graphToBack.setColor(Color.BLACK);
 				graphToBack.drawString("Score: " + score, 700, 550);
-				alienOne.invisible(graphToBack);
+				alienOne.setPos(-100, 100);
 			}
 		}
 		
