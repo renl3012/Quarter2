@@ -9,26 +9,38 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import static java.lang.Character.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+
+import java.awt.Image;
 
 import pong.Paddle;
 
 public class OuterSpace extends Canvas implements KeyListener, Runnable
 {
 	private Ship ship;
-	private Alien alienOne;
-	private Alien alienTwo;
+	//private Alien alienOne;
+	//private Alien alienTwo;
 	private Ammo ammo;
 	private boolean fired;
 	//private boolean destroyed;
 	private int score;
+	private PowerUp p;
+	private Image boostedShip;
+	private Image regShip;
+	private AlienAmmo currentAlienAmmo;
+	private boolean alienShoot;
+	private boolean vulnerable;
+	private int whoseTurn;
 	
 	private Aliens send;
 	private Alien[][] transfer;
 
 	private ArrayList<Alien> aliens;
-	private ArrayList<Ammo> shots;
+	private ArrayList<AlienAmmo> shots;
 
 	private boolean[] keys;
 	private BufferedImage back;
@@ -47,11 +59,43 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		send = new Aliens();
 		transfer = new Alien[3][2];
 		transfer = send.getAliens();
+		p = new PowerUp((int)(1+Math.random()*700), (int)(1+Math.random()*500));
+		currentAlienAmmo = new AlienAmmo();
+		shots = new ArrayList<AlienAmmo>();
+		alienShoot = false;
+		whoseTurn = 0;
+		vulnerable = true;
+		
+		try
+		{
+			boostedShip = ImageIO.read(new File(System.getProperty("user.dir") + "\\src\\starfighter\\shipWithShield.jpg"));
+		}
+		catch(Exception e)
+		{
+			//feel free to do something here
+			System.out.println("RIP. Something got messed up.");
+		}
+		
+		try
+		{
+			regShip = ImageIO.read(new File(System.getProperty("user.dir") + "\\src\\starfighter\\ship.jpg"));
+		}
+		catch(Exception e)
+		{
+			//feel free to do something here
+			System.out.println("RIP. Something got messed up.");
+		}
+		
+		
 		
 		for(int e = 0; e < 3; e++){
 			for(int f = 0; f < 2; f++){
 				aliens.add(transfer[e][f]);
 			}
+		}
+		
+		for(int d = 0; d < 6; d++){
+			shots.add(new AlienAmmo());
 		}
 		
 		ammo = new Ammo(ship.getX() + 35, ship.getY() + 5, 0);
@@ -88,8 +132,35 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		graphToBack.setColor(Color.BLACK);
 		graphToBack.fillRect(0,0,800,600);
 		
-		
+		p.draw(graphToBack);
 		ship.draw(graphToBack);
+		
+		for(int e = 0; e < 6; e++){
+			shots.set(e, new AlienAmmo((aliens.get(e)).getX() + 35, (aliens.get(e)).getY() + 80));
+			//shots.get(e).draw(graphToBack);
+			
+
+		}
+		
+		if(alienShoot == true){
+			currentAlienAmmo.move("DOWN");
+			currentAlienAmmo.draw(graphToBack);
+			
+		} else if (alienShoot == false){
+			whoseTurn = (int)(Math.random()*5);
+			currentAlienAmmo = shots.get(whoseTurn);
+			currentAlienAmmo.setSpeed(1);
+			//currentAlienAmmo.draw(graphToBack);
+			currentAlienAmmo.move("DOWN");
+			currentAlienAmmo.draw(graphToBack);
+			alienShoot = true;
+		}
+		
+		if(currentAlienAmmo.getY() >= 550){
+			currentAlienAmmo.setPos(-800, 800);
+			alienShoot = false;
+		}
+				
 		graphToBack.setColor(Color.WHITE);
 		graphToBack.drawString("Score: " + score, 700, 550);
 		
@@ -108,6 +179,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 			ammo.draw(graphToBack);
 		}
 		
+		
 		/*alienOne.move("LEFT");
 		if(alienOne.getX() < 0 || alienOne.getX() > 710){
 			alienOne.setSpeed(-alienOne.getSpeed());
@@ -124,6 +196,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 				a.setSpeed(-a.getSpeed());
 			}
 		}
+		
 		
 		//add code to move stuff
 		if(keys[0] == true)
@@ -193,10 +266,10 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 				if(ammo.getX() >= a.getX() && ammo.getX() <= a.getX() + 80){
 					ammo.setPos(-500,900);
 					ammo.setSpeed(0);
-					a.setPos(-100, 100);
+					a.setPos(-500, 100);
 					a.setSpeed(0);
 					a.invisible(graphToBack);
-					aliens.remove(a);
+					//aliens.remove(a);
 					//ammo.invisible(graphToBack);
 					score++;
 					graphToBack.setColor(Color.BLACK);
@@ -206,7 +279,34 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 			}
 		}
 		
-		if(aliens.size() == 0){
+		if(ship.getX()+80 >= p.getX() && ship.getX() + 80 <= p.getX()+75 || ship.getX() >= p.getX() && ship.getX() <= p.getX() + 80){
+			if(ship.getY()+80 >= p.getY() && ship.getY()+80 <= p.getY()+80 || ship.getY() >= p.getY() && ship.getY() <= p.getY()+80){
+				p.setPos(-800,800);
+				ship.setImage(boostedShip);
+				vulnerable = false;
+				graphToBack.setColor(Color.BLACK);
+				graphToBack.drawString("Score: " + score, 700, 550);
+			}
+		}
+		
+		if(currentAlienAmmo.getX()+10 >= ship.getX() && currentAlienAmmo.getX()+10 <= ship.getX()+80 || currentAlienAmmo.getX() >= ship.getX() && currentAlienAmmo.getX() <= ship.getX() + 80){
+			if(currentAlienAmmo.getY()+10 >= ship.getY() && currentAlienAmmo.getY()+10 <= ship.getY()+80 || currentAlienAmmo.getY() >= ship.getY() && currentAlienAmmo.getY() <= ship.getY()+80){
+				if(vulnerable == false){
+					currentAlienAmmo.setPos(-800,800);
+					currentAlienAmmo.setSpeed(0);
+					ship.setImage(regShip);
+					vulnerable = true;
+				}else{
+					currentAlienAmmo.setPos(-800,800);
+					currentAlienAmmo.setSpeed(0);
+					score -= 1;
+					graphToBack.setColor(Color.BLACK);
+					graphToBack.drawString("Score: " + score, 700, 550);
+				}
+			}
+		}
+		
+		if(score == 6){
 			graphToBack.setColor(Color.WHITE);
 			graphToBack.drawString("YOU WIN!", 400, 550);
 		}

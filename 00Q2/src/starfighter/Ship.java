@@ -53,6 +53,10 @@ public class Ship extends MovingThing
 		window.drawImage(image,getX(),getY(),80,80,null);
 		
 	}
+	
+	public void setImage(Image i){
+		image = i;
+	}
 
 	public String toString()
 	{
